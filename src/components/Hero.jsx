@@ -43,8 +43,8 @@ const Hero = () => {
               </button>
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
-              <a href="#" className="text-sm/6 font-semibold text-white">
-                Product
+              <a href="#blogg" className="text-sm/6 font-semibold text-white">
+                Blogs
               </a>
               <a href="#" className="text-sm/6 font-semibold text-white">
                 Features
@@ -105,10 +105,10 @@ const Hero = () => {
                 <div className="-my-6 divide-y divide-white/10">
                   <div className="space-y-2 py-6">
                     <a
-                      href="#"
+                      href="#blogg"
                       className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                     >
-                      Product
+                      Blogs
                     </a>
                     <a
                       href="#"
@@ -174,7 +174,7 @@ const Hero = () => {
                 >
                   Get started
                 </a>
-                <a href="#" className="text-sm/6 font-semibold text-gray-900">
+                <a href="#" className="text-sm/6 font-semibold text-gray-100">
                   Learn more <span aria-hidden="true">→</span>
                 </a>
               </div>

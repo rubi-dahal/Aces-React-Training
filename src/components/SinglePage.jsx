@@ -28,7 +28,7 @@ const SinglePage = () => {
     <div className="relative">
       <button
         onClick={goBack}
-        className="w-[30px] h-[30px]  absolute top-2.5 right-2.5 text-gray-800 dark:text-white rounded-full shadow-md hover:bg-amber-100 dark:hover:bg-gray-600 transition-colors duration-300"
+        className="w-[40px] h-[40px] text-2xl absolute top-1.5 right-1.5 text-gray-800 dark:text-white rounded-full shadow-md hover:bg-amber-100 dark:hover:bg-gray-600 transition-colors duration-300"
       >
         x
       </button>

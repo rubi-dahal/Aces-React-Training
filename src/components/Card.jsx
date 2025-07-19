@@ -31,7 +31,7 @@ const Card = ({ ...blog }) => {
             </p>
             <Link
               to={`/single-page/${blog.blog.id}`}
-              className="font-medium underline text-purple-600 dark:text-purple-400"
+              className="font-medium  text-purple-600 dark:text-purple-400"
             >
               Read More
             </Link>
