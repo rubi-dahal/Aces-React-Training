@@ -1,0 +1,102 @@
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import axios from "axios";
+
+const SinglePage = () => {
+  const navigate = useNavigate();
+  const [blog, setBlog] = useState(null);
+  const goBack = () => {
+    navigate(-1); // Navigate back to the previous page
+  };
+
+  const { id } = useParams();
+  const fetchBlogById = async (id) => {
+    const response = await axios.get(
+      `https://687af359abb83744b7ee4691.mockapi.io/blogs/${id}`
+    );
+    if (response) {
+      console.log(response.data);
+      setBlog(response.data);
+    }
+  };
+
+  useEffect(() => {
+    fetchBlogById(id);
+  }, [id]);
+
+  return (
+    <div className="relative">
+      <button
+        onClick={goBack}
+        className="w-[30px] h-[30px]  absolute top-2.5 right-2.5 text-gray-800 dark:text-white rounded-full shadow-md hover:bg-amber-100 dark:hover:bg-gray-600 transition-colors duration-300"
+      >
+        x
+      </button>
+      {blog && (
+        <div className="w-full h-full bg-white dark:bg-gray-800">
+          <div className="w-full mx-auto py-10 bg-white dark:bg-gray-800">
+            {/*  */}
+
+            {/*  */}
+
+            {/* Blog Cover */}
+            <img
+              src={blog.Image}
+              alt="Blog Cover"
+              className="xl:w-[80%] xs:w-[96%] mx-auto lg:h-[560px] md:h-[480px] rounded-lg object-cover"
+            />
+            {/* Blog Info */}
+            <div className="w-[90%] mx-auto flex md:gap-4 xs:gap-2 justify-center items-center pt-4">
+              <div className="flex gap-2 items-center">
+                <img
+                  src={blog.Image}
+                  alt="Bloger Profile"
+                  className="md:w-[2.2rem] md:h-[2.2rem] xs:w-[2rem] xs:h-[2rem] rounded-full object-cover"
+                />
+                <h2 className="text-sm font-semibold dark:text-white">
+                  {blog.Author}
+                </h2>
+              </div>
+              <div className="dark:text-gray-500">|</div>
+              <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                {blog.createdAt}
+              </h3>
+              <div className="dark:text-gray-500">|</div>
+              <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400">
+                5 MIN READ
+              </h4>
+            </div>
+            {/* Blog */}
+            <div className="py-6 bg-white dark:bg-gray-800">
+              <div className="md:w-[80%] xs:w-[90%] mx-auto pt-4">
+                <h1 className="text-5xl text-white bold  mt-3.5">
+                  {blog.Title}
+                </h1>
+                <h6 className="text-2xl text-gray-200 mt-5">{blog.Subtitle}</h6>
+                <p className="text-xl text-gray-300 ">{blog.Description}</p>
+                <p className="text-[17px] text-gray-300 mt-5">
+                  {blog.Paragraph}
+                </p>
+                <p className="text-[17px] text-gray-300 mt-5">
+                  {blog.Paragraph}
+                </p>
+                <p className="text-[17px] text-gray-300 mt-5">
+                  {blog.Paragraph}
+                </p>
+                <p className="text-[17px] text-gray-300 mt-5">
+                  {blog.Paragraph}
+                </p>
+
+                <p className="text-[17px] text-gray-300 mt-5">
+                  {blog.Paragraph}
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default SinglePage;
