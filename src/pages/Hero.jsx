@@ -12,7 +12,7 @@ const Hero = () => {
           >
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
+                <span className="sr-only">Rubi</span>
                 <img
                   src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
                   alt
@@ -48,7 +48,7 @@ const Hero = () => {
                 Blogs
               </Link>
               <Link to="/create" className="text-sm/6 font-semibold text-white">
-                Create
+                Create Blogs
               </Link>
               <Link
                 to="/learning-use-state"
