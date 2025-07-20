@@ -1,6 +1,5 @@
-// Signin.jsx
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Signin = () => {
@@ -76,12 +75,12 @@ const Signin = () => {
         </button>
 
         <div className="footer flex justify-between mt-4 text-sm text-white">
-          <a href="#" className="text-blue-400 hover:underline">
+          <Link to="/register" className="text-blue-400 hover:underline">
             REGISTER
-          </a>
-          <a href="#" className="text-blue-400 hover:underline">
+          </Link>
+          <Link to="#" className="text-blue-400 hover:underline">
             FORGOT PASSWORD
-          </a>
+          </Link>
         </div>
       </div>
     </div>

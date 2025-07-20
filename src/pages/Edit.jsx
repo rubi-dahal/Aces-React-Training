@@ -7,23 +7,6 @@ const Edit = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const checkIsUser = async (id) => {
-    const response = await axios.get(
-      `https://687af359abb83744b7ee4691.mockapi.io/blogs/${id}`
-    );
-    if (response) {
-      if (
-        !response.data.authorId == localStorage.getItem("userId") ||
-        localStorage.getItem("isAuthenticated") == "true"
-      ) {
-        //
-      } else {
-        console.log("unauthenticated");
-        navigate("/");
-      }
-    }
-  };
-
   useEffect(() => {
     const checkIsUser = async (id) => {
       const response = await axios.get(
@@ -52,7 +35,7 @@ const Edit = () => {
     const rawDetails = Object.fromEntries(formData);
 
     const details = Object.fromEntries(
-      Object.entries(rawDetails).filter(([_, value]) => value.trim() !== "")
+      Object.entries(rawDetails).filter(([, value]) => value.trim() !== "")
     );
 
     if (Object.keys(details).length === 0) {

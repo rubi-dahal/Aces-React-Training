@@ -8,6 +8,7 @@ import Signin from "./pages/Signin";
 import Create from "./pages/Create";
 import { ToastContainer } from "react-toastify";
 import Edit from "./pages/Edit";
+import Register from "./pages/Register";
 const App = () => {
   return (
     <div children="App">
@@ -19,6 +20,7 @@ const App = () => {
           <Route path="/signin" element={<Signin />} />
           <Route path="/create" element={<Create />} />
           <Route path="/edit/:id" element={<Edit />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </BrowserRouter>
       <ToastContainer />

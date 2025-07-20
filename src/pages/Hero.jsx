@@ -62,9 +62,23 @@ const Hero = () => {
               <Link to="#" className="text-sm/6 font-semibold text-white">
                 Blogs
               </Link>
-              <Link to="/create" className="text-sm/6 font-semibold text-white">
-                Create Blogs
-              </Link>
+              {isLoggedIn && (
+                <Link
+                  to="/create"
+                  className="text-sm/6 font-semibold text-white"
+                >
+                  Create Blogs
+                </Link>
+              )}
+              {!isLoggedIn && (
+                <Link
+                  to="/signin"
+                  className="text-sm/6 font-semibold text-white"
+                >
+                  Create Blogs
+                </Link>
+              )}
+
               <Link
                 to="/learning-use-state"
                 className="text-sm/6 font-semibold text-white"
@@ -135,38 +149,63 @@ const Hero = () => {
               <div className="mt-6 flow-root">
                 <div className="-my-6 divide-y divide-white/10">
                   <div className="space-y-2 py-6">
-                    <a
-                      href="#blogg"
+                    <Link
+                      to="#blogg"
                       className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                     >
                       Blogs
-                    </a>
-                    <a
-                      href="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
-                    >
-                      Features
-                    </a>
-                    <a
-                      href="/learning-use-state"
+                    </Link>
+                    {isLoggedIn && (
+                      <Link
+                        to="/create"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                      >
+                        Create Blogs
+                      </Link>
+                    )}
+                    {!isLoggedIn && (
+                      <Link
+                        to="/signin"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                      >
+                        Create Blogs
+                      </Link>
+                    )}
+
+                    <Link
+                      to="/learning-use-state"
                       className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                     >
                       Learning Use State
-                    </a>
-                    <a
-                      href="#"
+                    </Link>
+                    <Link
+                      to="#"
                       className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                     >
                       Company
-                    </a>
+                    </Link>
                   </div>
                   <div className="py-6">
-                    <Link
-                      to="/signin"
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-50"
-                    >
-                      Log in
-                    </Link>
+                    {!isLoggedIn && (
+                      <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
+                        <Link
+                          to="/signin"
+                          className="text-sm/6 font-semibold text-white"
+                        >
+                          Log in <span aria-hidden="true">→</span>
+                        </Link>
+                      </div>
+                    )}
+                    {isLoggedIn && (
+                      <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
+                        <button
+                          onClick={logOut}
+                          className="text-sm/6 font-semibold text-white"
+                        >
+                          Log Out <span aria-hidden="true">→</span>
+                        </button>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -198,17 +237,22 @@ const Hero = () => {
                 explore, or just read something beautiful, welcome to your next
                 favorite blog.
               </p>
-              <div className="mt-10 flex items-center justify-center gap-x-6">
-                <Link
-                  to="/signin"
-                  className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                  Get started
-                </Link>
-                <a href="#" className="text-sm/6 font-semibold text-gray-100">
-                  Learn more <span aria-hidden="true">→</span>
-                </a>
-              </div>
+              {!isLoggedIn && (
+                <div className="mt-10 flex items-center justify-center gap-x-6">
+                  <Link
+                    to="/signin"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-xs hover:bg-indigo-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Get started
+                  </Link>
+                  <Link
+                    to="#"
+                    className="text-sm/6 font-semibold text-gray-100"
+                  >
+                    Learn more <span aria-hidden="true">→</span>
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
           <div
