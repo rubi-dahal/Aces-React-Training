@@ -48,7 +48,7 @@ const Hero = () => {
                 Blogs
               </Link>
               <Link to="/create" className="text-sm/6 font-semibold text-white">
-                Create
+                Create Blogs
               </Link>
               <Link
                 to="/learning-use-state"
@@ -61,9 +61,9 @@ const Hero = () => {
               </Link>
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <a href="/Signin" className="text-sm/6 font-semibold text-white">
+              <Link to="/Signin" className="text-sm/6 font-semibold text-white">
                 Log in <span aria-hidden="true">→</span>
-              </a>
+              </Link>
             </div>
           </nav>
           {/* Mobile menu, show/hide based on menu open state. */}
