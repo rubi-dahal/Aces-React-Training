@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 const SinglePage = () => {
+  const [isUser, setIsUser] = useState(false);
   const navigate = useNavigate();
   const [blog, setBlog] = useState(null);
   const goBack = () => {
@@ -17,6 +18,14 @@ const SinglePage = () => {
     if (response) {
       console.log(response.data);
       setBlog(response.data);
+      let userIdLocalStorage = localStorage.getItem("userId");
+      let isAuthenticated = localStorage.getItem("isAuthenticated");
+      if (
+        response.data.authorId == userIdLocalStorage &&
+        isAuthenticated == "true"
+      ) {
+        setIsUser(true);
+      }
     }
   };
   async function deleteBlog() {
@@ -58,7 +67,7 @@ const SinglePage = () => {
             <div className="w-[90%] mx-auto flex md:gap-4 xs:gap-2 justify-center items-center pt-4">
               <div className="flex gap-2 items-center">
                 <img
-                  src={blog.Image}
+                  src={blog.authorImage}
                   alt="Bloger Profile"
                   className="md:w-[2.2rem] md:h-[2.2rem] xs:w-[2rem] xs:h-[2rem] rounded-full object-cover"
                 />
@@ -89,19 +98,22 @@ const SinglePage = () => {
                 </p>
               </div>
             </div>
-            <div className="btn flex gap-3.5 justify-center">
-              <Link to={`/edit/${id}`}>
-                <button className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm">
-                  Edit
+            {/* Conditional Rendering */}
+            {isUser && (
+              <div className="btn flex gap-3.5 justify-center">
+                <Link to={`/edit/${id}`}>
+                  <button className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm">
+                    Edit
+                  </button>
+                </Link>
+                <button
+                  onClick={deleteBlog}
+                  className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm"
+                >
+                  Delete
                 </button>
-              </Link>
-              <button
-                onClick={deleteBlog}
-                className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm"
-              >
-                Delete
-              </button>
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}

@@ -1,6 +1,7 @@
 // Signin.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Signin = () => {
   const navigate = useNavigate();
@@ -13,7 +14,9 @@ const Signin = () => {
 
   const handleLogin = async () => {
     try {
-      const res = await fetch("https://your-mockapi-url/users"); // Replace with your real MockAPI URL
+      const res = await fetch(
+        "https://687af359abb83744b7ee4691.mockapi.io/user"
+      ); // Replace with your real MockAPI URL
       const users = await res.json();
 
       const user = users.find(
@@ -21,9 +24,10 @@ const Signin = () => {
       );
 
       if (user) {
-        localStorage.setItem("mockToken", "fake-jwt-token");
-        alert("Login success!");
-        navigate("/dashboard");
+        localStorage.setItem("isAuthenticated", "true");
+        localStorage.setItem("userId", user.id);
+        toast.success("Logged in Successfully!");
+        navigate("/");
       } else {
         alert("Invalid credentials");
       }

@@ -1,9 +1,49 @@
 import axios from "axios";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const Edit = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
+
+  const checkIsUser = async (id) => {
+    const response = await axios.get(
+      `https://687af359abb83744b7ee4691.mockapi.io/blogs/${id}`
+    );
+    if (response) {
+      if (
+        !response.data.authorId == localStorage.getItem("userId") ||
+        localStorage.getItem("isAuthenticated") == "true"
+      ) {
+        //
+      } else {
+        console.log("unauthenticated");
+        navigate("/");
+      }
+    }
+  };
+
+  useEffect(() => {
+    const checkIsUser = async (id) => {
+      const response = await axios.get(
+        `https://687af359abb83744b7ee4691.mockapi.io/blogs/${id}`
+      );
+      if (response) {
+        if (
+          !response.data.authorId == localStorage.getItem("userId") ||
+          localStorage.getItem("isAuthenticated") == "true"
+        ) {
+          //
+        } else {
+          console.log("unauthenticated");
+          navigate("/");
+        }
+      }
+    };
+    checkIsUser(id);
+  }, [id, navigate]);
+
   const editBlog = async (e) => {
     e.preventDefault();
     console.log("Form Submitted");
@@ -34,7 +74,6 @@ const Edit = () => {
       toast.error("Blog edit failed");
     }
   };
-  const navigate = useNavigate();
   const goBack = () => {
     navigate(-1);
   };

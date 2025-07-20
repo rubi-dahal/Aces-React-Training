@@ -1,7 +1,22 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    let isAuthenticated = localStorage.getItem("isAuthenticated");
+    if (isAuthenticated == "true") {
+      setIsLoggedIn(true);
+    }
+  }, []);
+
+  const logOut = () => {
+    localStorage.setItem("isAuthenticated", "false");
+    localStorage.setItem("userId", null);
+    setIsLoggedIn(false);
+  };
+
   return (
     <div>
       <div className=" dark:bg-gray-800">
@@ -60,11 +75,26 @@ const Hero = () => {
                 Company
               </Link>
             </div>
-            <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-              <Link to="/signin" className="text-sm/6 font-semibold text-white">
-                Log in <span aria-hidden="true">→</span>
-              </Link>
-            </div>
+            {!isLoggedIn && (
+              <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                <Link
+                  to="/signin"
+                  className="text-sm/6 font-semibold text-white"
+                >
+                  Log in <span aria-hidden="true">→</span>
+                </Link>
+              </div>
+            )}
+            {isLoggedIn && (
+              <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+                <button
+                  onClick={logOut}
+                  className="text-sm/6 font-semibold text-white"
+                >
+                  Log Out <span aria-hidden="true">→</span>
+                </button>
+              </div>
+            )}
           </nav>
           {/* Mobile menu, show/hide based on menu open state. */}
           <div role="dialog" aria-modal="true" className="lg:hidden">
@@ -131,12 +161,12 @@ const Hero = () => {
                     </a>
                   </div>
                   <div className="py-6">
-                    <a
-                      href="/signin"
+                    <Link
+                      to="/signin"
                       className="-mx-3 block rounded-lg px-3 py-2.5 text-base/7 font-semibold text-white hover:bg-gray-50"
                     >
                       Log in
-                    </a>
+                    </Link>
                   </div>
                 </div>
               </div>
