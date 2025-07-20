@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Hero = () => {
   return (
@@ -43,21 +44,21 @@ const Hero = () => {
               </button>
             </div>
             <div className="hidden lg:flex lg:gap-x-12">
-              <a href="#blogg" className="text-sm/6 font-semibold text-white">
+              <Link to="#" className="text-sm/6 font-semibold text-white">
                 Blogs
-              </a>
-              <a href="#" className="text-sm/6 font-semibold text-white">
-                Features
-              </a>
-              <a
-                href="/learning-use-state"
+              </Link>
+              <Link to="/create" className="text-sm/6 font-semibold text-white">
+                Create
+              </Link>
+              <Link
+                to="/learning-use-state"
                 className="text-sm/6 font-semibold text-white"
               >
                 Learning useState
-              </a>
-              <a href="#" className="text-sm/6 font-semibold text-white">
+              </Link>
+              <Link to="#" className="text-sm/6 font-semibold text-white">
                 Company
-              </a>
+              </Link>
             </div>
             <div className="hidden lg:flex lg:flex-1 lg:justify-end">
               <a href="/Signin" className="text-sm/6 font-semibold text-white">

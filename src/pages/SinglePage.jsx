@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const SinglePage = () => {
   const navigate = useNavigate();
@@ -8,7 +9,6 @@ const SinglePage = () => {
   const goBack = () => {
     navigate(-1); // Navigate back to the previous page
   };
-
   const { id } = useParams();
   const fetchBlogById = async (id) => {
     const response = await axios.get(
@@ -19,7 +19,16 @@ const SinglePage = () => {
       setBlog(response.data);
     }
   };
-
+  async function deleteBlog() {
+    const response = await axios.delete(
+      `https://687af359abb83744b7ee4691.mockapi.io/blogs/${id}`
+    );
+    // console.log(response.data)
+    if (response) {
+      goBack();
+      toast.success("Blog Deleted!");
+    }
+  }
   useEffect(() => {
     fetchBlogById(id);
   }, [id]);
@@ -66,6 +75,7 @@ const SinglePage = () => {
                 5 MIN READ
               </h4>
             </div>
+
             {/* Blog */}
             <div className="py-6 bg-white dark:bg-gray-800">
               <div className="md:w-[80%] xs:w-[90%] mx-auto pt-4">
@@ -77,20 +87,20 @@ const SinglePage = () => {
                 <p className="text-[17px] text-gray-300 mt-5">
                   {blog.Paragraph}
                 </p>
-                <p className="text-[17px] text-gray-300 mt-5">
-                  {blog.Paragraph}
-                </p>
-                <p className="text-[17px] text-gray-300 mt-5">
-                  {blog.Paragraph}
-                </p>
-                <p className="text-[17px] text-gray-300 mt-5">
-                  {blog.Paragraph}
-                </p>
-
-                <p className="text-[17px] text-gray-300 mt-5">
-                  {blog.Paragraph}
-                </p>
               </div>
+            </div>
+            <div className="btn flex gap-3.5 justify-center">
+              <Link to={`/edit/${id}`}>
+                <button className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm">
+                  Edit
+                </button>
+              </Link>
+              <button
+                onClick={deleteBlog}
+                className="w-[100px] py-2 bg-gray-700 hover:bg-purple-800 text-white text-2xl font-medium rounded transition duration-200 shadow-sm"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
