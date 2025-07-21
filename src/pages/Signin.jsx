@@ -25,6 +25,7 @@ const Signin = () => {
       if (user) {
         localStorage.setItem("isAuthenticated", "true");
         localStorage.setItem("userId", user.id);
+        localStorage.setItem("userEmail", user.email);
         toast.success("Logged in Successfully!");
         navigate("/");
       } else {

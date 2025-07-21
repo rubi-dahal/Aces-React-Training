@@ -1,13 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
-  const [toggleSidebar, setToggleSidebar] = useState();
+  const id = localStorage.getItem("userId");
+  const email = localStorage.getItem("userEmail");
+  const [toggleSidebar, setToggleSidebar] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [showInfo, setShowInfo] = useState(false);
+  const infoRef = useRef(null);
 
   useEffect(() => {
     let isAuthenticated = localStorage.getItem("isAuthenticated");
-    if (isAuthenticated == "true") {
+    if (isAuthenticated === "true") {
       setIsLoggedIn(true);
     }
   }, []);
@@ -15,16 +19,41 @@ const Hero = () => {
   const logOut = () => {
     localStorage.setItem("isAuthenticated", "false");
     localStorage.setItem("userId", null);
+    localStorage.setItem("email", null);
     setIsLoggedIn(false);
+    setShowInfo(false);
   };
 
   const toggleSidebarFn = () => {
     setToggleSidebar(!toggleSidebar);
   };
 
+  const toggleInfo = () => {
+    setShowInfo(!showInfo);
+  };
+
+  // Close user info popup on outside click
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (infoRef.current && !infoRef.current.contains(event.target)) {
+        setShowInfo(false);
+      }
+    }
+
+    if (showInfo) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showInfo]);
+
   return (
     <div>
-      <div className=" dark:bg-gray-800">
+      <div className="dark:bg-gray-800 min-h-screen">
         <header className="absolute inset-x-0 top-0 z-50">
           <nav
             aria-label="Global"
@@ -48,9 +77,8 @@ const Hero = () => {
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
-                  data-slot="icon"
                   aria-hidden="true"
-                  className="size-6"
+                  className="w-6 h-6"
                 >
                   <path
                     d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
@@ -64,15 +92,14 @@ const Hero = () => {
               <Link to="#" className="text-sm/6 font-semibold text-white">
                 Blogs
               </Link>
-              {isLoggedIn && (
+              {isLoggedIn ? (
                 <Link
                   to="/create"
                   className="text-sm/6 font-semibold text-white"
                 >
                   Create Blogs
                 </Link>
-              )}
-              {!isLoggedIn && (
+              ) : (
                 <Link
                   to="/signin"
                   className="text-sm/6 font-semibold text-white"
@@ -80,7 +107,6 @@ const Hero = () => {
                   Create Blogs
                 </Link>
               )}
-
               <Link
                 to="/learning-use-state"
                 className="text-sm/6 font-semibold text-white"
@@ -102,22 +128,51 @@ const Hero = () => {
               </div>
             )}
             {isLoggedIn && (
-              <div className="hidden lg:flex lg:flex-1 lg:justify-end">
+              <div className="relative hidden lg:flex lg:flex-1 lg:justify-end">
                 <button
-                  onClick={logOut}
-                  className="text-sm/6 font-semibold text-white"
+                  onClick={toggleInfo}
+                  className="text-sm/6 font-semibold text-white focus:outline-none"
                 >
-                  Log Out <span aria-hidden="true">→</span>
+                  <img
+                    className="w-[30px] h-[30px] rounded-full"
+                    src="https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2210.jpg?semt=ais_hybrid&w=740"
+                    alt="User Avatar"
+                  />
                 </button>
+                {showInfo && (
+                  <div
+                    ref={infoRef}
+                    className="absolute p-1 right-0 mt-2 w-56 bg-gray-800 text-white rounded-lg shadow-lg p-4 z-50"
+                  >
+                    <p
+                      onClick={toggleInfo}
+                      className=" text-xl cursor-pointer rounded-full absolute top-0.5 right-1.5"
+                    >
+                      x
+                    </p>
+                    <p className="text-sm text-gray-200">
+                      <span className="font-bold">Email:</span> {email}
+                    </p>
+                    <p className="text-sm text-gray-200 mt-1">
+                      <span className="font-bold">ID:</span> {id}
+                    </p>
+                    <button
+                      onClick={logOut}
+                      className="mt-3 w-full text-left text-gray-300 hover:text-gray-400"
+                    >
+                      Log Out
+                    </button>
+                  </div>
+                )}
               </div>
             )}
           </nav>
-          {/* Mobile menu, show/hide based on menu open state. */}
+
+          {/* Mobile Sidebar */}
           {toggleSidebar && (
             <div role="dialog" aria-modal="true" className="lg:hidden">
-              {/* Background backdrop, show/hide based on slide-over state. */}
-              <div className="fixed inset-0 z-50" />
-              <div className="fixed inset-y-0 right-0 z-50 bg-gray-800 w-full overflow-y-auto p-6  sm:max-w-sm sm:ring-1 sm:ring-white/10">
+              <div className="fixed inset-0 z-50 bg-black/50" />
+              <div className="fixed inset-y-0 right-0 z-50 bg-gray-800 w-full overflow-y-auto p-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
                 <div className="flex items-center justify-between">
                   <a href="#" className="-m-1.5 p-1.5">
                     <span className="sr-only">Your Company</span>
@@ -134,9 +189,8 @@ const Hero = () => {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="1.5"
-                      data-slot="icon"
                       aria-hidden="true"
-                      className="size-6"
+                      className="w-6 h-6"
                     >
                       <path
                         d="M6 18 18 6M6 6l12 12"
@@ -155,15 +209,14 @@ const Hero = () => {
                       >
                         Blogs
                       </Link>
-                      {isLoggedIn && (
+                      {isLoggedIn ? (
                         <Link
                           to="/create"
                           className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                         >
                           Create Blogs
                         </Link>
-                      )}
-                      {!isLoggedIn && (
+                      ) : (
                         <Link
                           to="/signin"
                           className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
@@ -171,7 +224,6 @@ const Hero = () => {
                           Create Blogs
                         </Link>
                       )}
-
                       <Link
                         to="/learning-use-state"
                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
@@ -198,12 +250,39 @@ const Hero = () => {
                       )}
                       {isLoggedIn && (
                         <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
-                          <button
-                            onClick={logOut}
-                            className="text-sm/6 font-semibold text-white"
-                          >
-                            Log Out <span aria-hidden="true">→</span>
+                          <button onClick={toggleInfo}>
+                            <img
+                              className="w-[30px] h-[30px] rounded-full"
+                              src="https://img.freepik.com/premium-vector/vector-flat-illustration-grayscale-avatar-user-profile-person-icon-gender-neutral-silhouette-profile-picture-suitable-social-media-profiles-icons-screensavers-as-templatex9xa_719432-2210.jpg?semt=ais_hybrid&w=740"
+                              alt="User Avatar"
+                            />
                           </button>
+                          {showInfo && (
+                            <div
+                              ref={infoRef}
+                              className="absolute left-1.5 mt-2 w-56 bg-gray-700 text-white rounded-lg shadow-lg p-4 z-50"
+                            >
+                              <p
+                                onClick={toggleInfo}
+                                className=" text-xl cursor-pointer rounded-full absolute top-0.5 right-1.5"
+                              >
+                                x
+                              </p>
+                              <p className="text-sm text-gray-200">
+                                <span className="font-bold">Email:</span>{" "}
+                                {email}
+                              </p>
+                              <p className="text-sm text-gray-200 mt-1">
+                                <span className="font-bold">ID:</span> {id}
+                              </p>
+                              <button
+                                onClick={logOut}
+                                className="mt-3 w-full text-left text-gray-300 hover:text-gray-400"
+                              >
+                                Log Out
+                              </button>
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -213,6 +292,8 @@ const Hero = () => {
             </div>
           )}
         </header>
+
+        {/* Main hero content */}
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div
             aria-hidden="true"
@@ -223,7 +304,7 @@ const Hero = () => {
                 clipPath:
                   "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
               }}
-              className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
+              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[144.5rem] -translate-x-1/2 rotate-30 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-30rem)] sm:w-[288.75rem]"
             />
           </div>
           <div className="mx-auto max-w-2xl py-22 sm:py-32 lg:py-38">
@@ -265,7 +346,7 @@ const Hero = () => {
                 clipPath:
                   "polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)",
               }}
-              className="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-288.75"
+              className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[144.5rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[288.75rem]"
             />
           </div>
         </div>
