@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
+  const [toggleSidebar, setToggleSidebar] = useState();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -17,27 +18,28 @@ const Hero = () => {
     setIsLoggedIn(false);
   };
 
+  const toggleSidebarFn = () => {
+    setToggleSidebar(!toggleSidebar);
+  };
+
   return (
     <div>
       <div className=" dark:bg-gray-800">
         <header className="absolute inset-x-0 top-0 z-50">
           <nav
             aria-label="Global"
-            className="flex items-center justify-between p-6 lg:px-8"
+            className="flex items-center justify-between p-6 lg:px-8 mx-[6vw]"
           >
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
                 <span className="sr-only">Rubi</span>
-                <img
-                  src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                  alt
-                  className="h-8 w-auto"
-                />
+                <h1 className="text-2xl font-semibold text-white">Rubi</h1>
               </a>
             </div>
             <div className="flex lg:hidden">
               <button
                 type="button"
+                onClick={toggleSidebarFn}
                 className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-white"
               >
                 <span className="sr-only">Open main menu</span>
@@ -111,106 +113,105 @@ const Hero = () => {
             )}
           </nav>
           {/* Mobile menu, show/hide based on menu open state. */}
-          <div role="dialog" aria-modal="true" className="lg:hidden">
-            {/* Background backdrop, show/hide based on slide-over state. */}
-            <div className="fixed inset-0 z-50" />
-            <div className="fixed inset-y-0 right-0 z-50 w-full overflow-y-auto bg-grey-600 p-6 sm:max-w-sm sm:ring-1 sm:ring-white/10">
-              <div className="flex items-center justify-between">
-                <a href="#" className="-m-1.5 p-1.5">
-                  <span className="sr-only">Your Company</span>
-                  <img
-                    src="https://tailwindcss.com/plus-assets/img/logos/mark.svg?color=indigo&shade=600"
-                    alt
-                    className="h-8 w-auto"
-                  />
-                </a>
-                <button
-                  type="button"
-                  className="-m-2.5 rounded-md p-2.5 text-white"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    data-slot="icon"
-                    aria-hidden="true"
-                    className="size-6"
+          {toggleSidebar && (
+            <div role="dialog" aria-modal="true" className="lg:hidden">
+              {/* Background backdrop, show/hide based on slide-over state. */}
+              <div className="fixed inset-0 z-50" />
+              <div className="fixed inset-y-0 right-0 z-50 bg-gray-800 w-full overflow-y-auto p-6  sm:max-w-sm sm:ring-1 sm:ring-white/10">
+                <div className="flex items-center justify-between">
+                  <a href="#" className="-m-1.5 p-1.5">
+                    <span className="sr-only">Your Company</span>
+                    <h1 className="-mx-3 block rounded-lg px-3 py-2 text-xl font-semibold text-white hover:bg-gray-50"></h1>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={toggleSidebarFn}
+                    className="-m-2.5 rounded-md p-2.5 text-white"
                   >
-                    <path
-                      d="M6 18 18 6M6 6l12 12"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </button>
-              </div>
-              <div className="mt-6 flow-root">
-                <div className="-my-6 divide-y divide-white/10">
-                  <div className="space-y-2 py-6">
-                    <Link
-                      to="#blogg"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                    <span className="sr-only">Close menu</span>
+                    <svg
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      data-slot="icon"
+                      aria-hidden="true"
+                      className="size-6"
                     >
-                      Blogs
-                    </Link>
-                    {isLoggedIn && (
+                      <path
+                        d="M6 18 18 6M6 6l12 12"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <div className="mt-6 flow-root">
+                  <div className="-my-6 divide-y divide-white/10">
+                    <div className="space-y-2 py-6">
                       <Link
-                        to="/create"
+                        to="#blogg"
                         className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                       >
-                        Create Blogs
+                        Blogs
                       </Link>
-                    )}
-                    {!isLoggedIn && (
-                      <Link
-                        to="/signin"
-                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
-                      >
-                        Create Blogs
-                      </Link>
-                    )}
-
-                    <Link
-                      to="/learning-use-state"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
-                    >
-                      Learning Use State
-                    </Link>
-                    <Link
-                      to="#"
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
-                    >
-                      Company
-                    </Link>
-                  </div>
-                  <div className="py-6">
-                    {!isLoggedIn && (
-                      <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
+                      {isLoggedIn && (
+                        <Link
+                          to="/create"
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                        >
+                          Create Blogs
+                        </Link>
+                      )}
+                      {!isLoggedIn && (
                         <Link
                           to="/signin"
-                          className="text-sm/6 font-semibold text-white"
+                          className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
                         >
-                          Log in <span aria-hidden="true">→</span>
+                          Create Blogs
                         </Link>
-                      </div>
-                    )}
-                    {isLoggedIn && (
-                      <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
-                        <button
-                          onClick={logOut}
-                          className="text-sm/6 font-semibold text-white"
-                        >
-                          Log Out <span aria-hidden="true">→</span>
-                        </button>
-                      </div>
-                    )}
+                      )}
+
+                      <Link
+                        to="/learning-use-state"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                      >
+                        Learning Use State
+                      </Link>
+                      <Link
+                        to="#"
+                        className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50"
+                      >
+                        Company
+                      </Link>
+                    </div>
+                    <div className="py-6">
+                      {!isLoggedIn && (
+                        <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
+                          <Link
+                            to="/signin"
+                            className="text-sm/6 font-semibold text-white"
+                          >
+                            Log in <span aria-hidden="true">→</span>
+                          </Link>
+                        </div>
+                      )}
+                      {isLoggedIn && (
+                        <div className="-mx-3 block rounded-lg px-3 py-2 text-base/7 font-semibold text-white hover:bg-gray-50">
+                          <button
+                            onClick={logOut}
+                            className="text-sm/6 font-semibold text-white"
+                          >
+                            Log Out <span aria-hidden="true">→</span>
+                          </button>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </header>
         <div className="relative isolate px-6 pt-14 lg:px-8">
           <div

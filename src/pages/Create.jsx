@@ -8,7 +8,12 @@ const Create = () => {
     console.log("Form Submitted");
 
     const formData = new FormData(e.target);
-    const details = Object.fromEntries(formData);
+    const authorId = localStorage.userId;
+
+    const details = {
+      ...Object.fromEntries(formData),
+      authorId: authorId,
+    };
 
     try {
       const response = await axios.post(
@@ -32,7 +37,7 @@ const Create = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-6">
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-4">
       <button
         onClick={goBack}
         className="w-[40px] h-[40px] text-2xl absolute top-1.5 right-1.5 text-gray-800 dark:text-white rounded-full shadow-md hover:bg-amber-100 dark:hover:bg-gray-600 transition-colors duration-300"
@@ -41,7 +46,7 @@ const Create = () => {
       </button>
       <form
         onSubmit={createBlog}
-        className="w-full max-w-2xl bg-gray-800 p-8 rounded-lg shadow-lg space-y-6"
+        className="w-full max-w-2xl bg-gray-800 p-4 rounded-lg shadow-lg space-y-4"
       >
         <h2 className="text-3xl font-bold text-center mb-4">Create Blog</h2>
 
@@ -53,7 +58,7 @@ const Create = () => {
             type="text"
             name="Title"
             id="title"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -66,7 +71,7 @@ const Create = () => {
             type="text"
             name="Subtitle"
             id="subtitle"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -79,7 +84,7 @@ const Create = () => {
             type="text"
             name="Description"
             id="description"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -92,7 +97,7 @@ const Create = () => {
             type="text"
             name="Image"
             id="image"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -105,7 +110,7 @@ const Create = () => {
             type="text"
             name="Author"
             id="author"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
@@ -118,7 +123,7 @@ const Create = () => {
             name="Paragraph"
             id="paragraph"
             rows="4"
-            className="px-3 py-2 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="px-3 py-1 rounded bg-gray-700 text-white border border-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500"
             required
           />
         </div>
