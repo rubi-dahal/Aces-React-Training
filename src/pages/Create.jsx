@@ -1,8 +1,18 @@
 import axios from "axios";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const Create = () => {
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userId = localStorage.getItem("userId"); // or token
+
+    if (userId == "null") {
+      // Not logged in
+      navigate("/signin"); // redirect to login
+    }
+  }, []);
   const createBlog = async (e) => {
     e.preventDefault();
     console.log("Form Submitted");
@@ -30,7 +40,6 @@ const Create = () => {
       toast.error("Blog creation failed");
     }
   };
-  const navigate = useNavigate();
 
   const goBack = () => {
     navigate(-1);
