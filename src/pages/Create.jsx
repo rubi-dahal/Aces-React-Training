@@ -6,11 +6,11 @@ import { toast } from "react-toastify";
 const Create = () => {
   const navigate = useNavigate();
   useEffect(() => {
-    const userId = localStorage.getItem("userId"); // or token
+    const userId = localStorage.getItem("userId"); 
 
     if (userId == "null") {
-      // Not logged in
-      navigate("/signin"); // redirect to login
+    
+      navigate("/signin"); 
     }
   }, []);
   const createBlog = async (e) => {
