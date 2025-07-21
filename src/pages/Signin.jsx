@@ -29,10 +29,10 @@ const Signin = () => {
         toast.success("Logged in Successfully!");
         navigate("/");
       } else {
-        alert("Invalid credentials");
+        toast.error("Invalid credentials");
       }
     } catch (err) {
-      alert("Something went wrong");
+      toast.error("Something went wrong!");
       console.error(err);
     }
   };
