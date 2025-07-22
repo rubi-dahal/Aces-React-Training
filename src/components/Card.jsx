@@ -22,7 +22,7 @@ const Card = ({ ...blog }) => {
               {blog.blog.createdAt}
             </p>
             <a href="#" className="block mb-3 hover:underline">
-              <h2 className="text-2xl font-bold leading-5 text-black dark:text-white transition-colors duration-200 hover:text-purple-700 dark:hover:text-purple-400">
+              <h2 className="text-2xl font-bold mb-0.5 leading-5 text-black dark:text-white transition-colors duration-200 hover:text-purple-700 dark:hover:text-purple-400">
                 {blog.blog.Title}
               </h2>
             </a>
