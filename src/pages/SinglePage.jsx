@@ -64,14 +64,15 @@ const SinglePage = () => {
               className="xl:w-[80%] xs:w-[96%] mx-auto lg:h-[560px] md:h-[480px] rounded-lg object-cover"
             />
             {/* Blog Info */}
-            <div className="w-[90%] mx-auto flex md:gap-4 xs:gap-2 justify-center items-center pt-4">
+            <div className="w-[95%] mx-auto flex md:gap-4 xs:gap-2  sm:gap-1 justify-center items-center pt-4">
               <div className="flex gap-2 items-center">
                 <img
                   src={blog.authorImage}
                   alt="Bloger Profile"
-                  className="md:w-[2.2rem] md:h-[2.2rem] xs:w-[2rem] xs:h-[2rem] rounded-full object-cover"
+                  className="w-[1.5rem] h-[1.5rem] sm:w-[1.8rem] sm:h-[1.8rem] md:w-[2.4rem] md:h-[2.4rem] rounded-full object-cover
+r"
                 />
-                <h2 className="text-sm font-semibold dark:text-white">
+                <h2 className="text-sm font-semibold dark:text-white sm:text-[12px]">
                   {blog.Author}
                 </h2>
               </div>
