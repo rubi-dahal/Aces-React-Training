@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Hero = () => {
   const id = localStorage.getItem("userId");
@@ -22,6 +23,7 @@ const Hero = () => {
     localStorage.setItem("email", null);
     setIsLoggedIn(false);
     setShowInfo(false);
+    toast.success("Logged out!");
   };
 
   const toggleSidebarFn = () => {
