@@ -51,7 +51,7 @@ const Signin = () => {
         <div className="input-group mb-4 text-left">
           <label className="block text-sm text-gray-400 mb-1">Email</label>
           <input
-            type="text"
+            type="email"
             placeholder="Enter Email"
             onChange={(e) => setEmail(e.target.value)}
             className="w-full p-2 rounded bg-white/10 text-white text-sm outline-none"
